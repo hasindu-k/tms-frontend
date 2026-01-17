@@ -20,44 +20,44 @@ export default function App() {
     <SnackbarProvider maxSnack={3}>
       <Router>
         <UserProvider>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Welcome />} />
-          <Route path="/" element={<GuestLayout />}>
-            <Route path="register" element={<SignUpForm />} />
-            <Route path="login" element={<LoginForm />} />
-            <Route
-              path="/auth/google/callback"
-              element={<GoogleLoginCallback />}
-            />
-            <Route
-              path="password-recovery"
-              element={<PasswordRecoveryForm />}
-            />
-            <Route
-              path="password-reset/:token"
-              element={<PasswordResetForm />}
-            />
-          </Route>
-
-          {/* Email verification route (public route) */}
-          <Route
-            path="/email/verify/:userId/:hash"
-            element={<EmailVerification />}
-          />
-
-          {/* Protected routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<DashboardLayout />}>
-              <Route path="dashboard" element={<MainDashboard />} />
-              <Route path="modal" element={<Modal />} />
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Welcome />} />
+            <Route path="/" element={<GuestLayout />}>
+              <Route path="register" element={<SignUpForm />} />
+              <Route path="login" element={<LoginForm />} />
+              <Route
+                path="/auth/google/callback"
+                element={<GoogleLoginCallback />}
+              />
+              <Route
+                path="password-recovery"
+                element={<PasswordRecoveryForm />}
+              />
+              <Route
+                path="password-reset/:token"
+                element={<PasswordResetForm />}
+              />
             </Route>
-          </Route>
-          {/* Error route */}
-          <Route path="/error" element={<ErrorPage />} />
-          {/* handling unknown routes 404 */}
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+
+            {/* Email verification route (public route) */}
+            <Route
+              path="/email/verify/:userId/:hash"
+              element={<EmailVerification />}
+            />
+
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<DashboardLayout />}>
+                <Route path="dashboard" element={<MainDashboard />} />
+                <Route path="modal" element={<Modal />} />
+              </Route>
+            </Route>
+            {/* Error route */}
+            <Route path="/error" element={<ErrorPage />} />
+            {/* handling unknown routes 404 */}
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
         </UserProvider>
       </Router>
     </SnackbarProvider>

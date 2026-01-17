@@ -10,13 +10,16 @@ const useGoogleLogin = () => {
     try {
       const baseURL = import.meta.env.VITE_API_BASE_URL;
       window.location.href = `${baseURL}/auth/google`;
+      // Note: page will redirect, so loading state persists
     } catch (error) {
       console.error("Google login failed", error);
       setGoogleLoading(false);
     }
   };
   const saveAuthData = (data) => {
-    Cookies.set("token", data.authorization.access_token, { expires: TOKEN_EXPIRATION });
+    Cookies.set("token", data.authorization.access_token, {
+      expires: TOKEN_EXPIRATION,
+    });
   };
 
   return { googleLoading, handleGoogleLogin, saveAuthData };

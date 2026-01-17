@@ -202,14 +202,14 @@ const LoginForm = () => {
             fullWidth
             variant="contained"
             color="white"
-            startIcon={<FcGoogle size={20} />}
+            startIcon={!googleLoading && <FcGoogle size={20} />}
             disabled={googleLoading}
             onClick={handleGoogleLogin}
           >
             {googleLoading ? (
-              <CircularProgress size={20} />
+              <CircularProgress size={20} color="inherit" />
             ) : (
-              "Sign Up with Google"
+              "Log in with Google"
             )}
           </Button>
           <a href="/register">
