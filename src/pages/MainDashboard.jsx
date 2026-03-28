@@ -8,11 +8,11 @@ const MainDashboard = () => {
           Welcome back! 🚀
         </h2>
         <p className="text-white/60 mt-2 font-medium">
-          Here's a quick overview of your workspace.
+          Here is your workspace.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           { label: "Active Tasks", value: "12", color: "from-blue-500 to-cyan-500" },
           { label: "Projects", value: "4", color: "from-purple-500 to-pink-500" },
@@ -26,7 +26,7 @@ const MainDashboard = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
