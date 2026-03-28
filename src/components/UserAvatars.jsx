@@ -4,9 +4,9 @@ const UserAvatars = ({ users }) => {
   return (
     <ul className="flex">
       {users.map((user, index) => (
-        <li className={index === 0 ? "" : "-ml-[4%]"} key={user.id}>
+        <li className={index === 0 ? "" : "-ml-2"} key={user.id}>
           <img
-            className="bg-[#D3B3FF] h-5 w-5 md:h-6 md:w-6 rounded-full"
+            className="h-8 w-8 rounded-full border-2 border-[#0899A3] ring-2 ring-white/10 transform hover:-translate-y-1 transition-transform"
             src={user.avatar}
             alt={user.name}
           />

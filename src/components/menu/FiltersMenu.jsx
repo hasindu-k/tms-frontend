@@ -86,15 +86,15 @@ const FiltersMenu = ({ onApplyFilters }) => {
     <div className="relative inline-block">
       <button
         onClick={toggleMenu}
-        className="text-[9px] px-[2px] py-[1px] text-white bg-secondary-green rounded-[2px] hover:bg-primary-green md:text-[15px] md:font-semibold md:px-2 md:rounded-[4px]"
+        className="flex items-center gap-2 py-2 px-4 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-lg transition-all duration-300 font-medium text-sm shadow-sm active:scale-95"
       >
-        <FontAwesomeIcon className="mr-1" icon={faBars} />
-        Filters
+        <FontAwesomeIcon icon={faBars} />
+        <span>Filters</span>
       </button>
 
       {isMenuOpen && (
-        <div className="absolute right-0 top-3 mt-5 w-[182px] md:w-[230px] lg:w-65 bg-white/90 shadow-md rounded-md p-2 px-5 z-50">
-          <h3 className="text-center text-secondary-green text-sm font-semibold mb-2">
+        <div className="absolute right-0 top-full mt-2 w-72 bg-slate-900/95 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-2xl p-4 z-[9999] text-white animate-in fade-in slide-in-from-top-2 duration-200 ring-1 ring-white/10">
+          <h3 className="text-center text-white font-bold mb-2 tracking-wide uppercase text-xs">
             Filter by Status
           </h3>
           <div className="flex flex-col text-[13px] md:text-[15px]">
@@ -106,20 +106,20 @@ const FiltersMenu = ({ onApplyFilters }) => {
                     onChange={handleStatusChange}
                     checked={selectedFilters.status.includes(status)}
                     type="checkbox"
-                    className="peer h-3 w-3 md:h-5 md:w-5 cursor-pointer transition-all appearance-none rounded-full bg-slate-100 shadow hover:shadow-md border border-slate-300 checked:bg-primary-green/50 checked:border-primary-green"
+                    className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded-md bg-white/10 border border-white/20 checked:bg-white/30 checked:border-white/40"
                   />
-                  <span className="absolute text-white text-[9px] md:text-[12px] font-bold opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <span className="absolute text-white text-[10px] font-bold opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
                     <FontAwesomeIcon icon={faCheck} />
                   </span>
                 </label>
-                <span className="ml-2 capitalize">
+                <span className="ml-3 text-sm font-medium text-white/80 peer-hover:text-white transition-colors">
                   {status.replace("-", " ")}
                 </span>
               </div>
             ))}
           </div>
-          <hr className="md:my-2 lg:my-5" />
-          <h3 className="text-center text-sm font-semibold my-2 lg:my-4 text-secondary-green">
+          <div className="h-px bg-white/10 my-2" />
+          <h3 className="text-center text-sm font-semibold mb-2 text-secondary-green">
             Filter by Priority
           </h3>
           <div className="flex flex-col text-[13px] md:text-[15px]">
@@ -148,9 +148,9 @@ const FiltersMenu = ({ onApplyFilters }) => {
             ))}
           </div>
 
-          <hr className="md:my-2 lg:my-5" />
+          <hr className="my-2 border-white/10" />
 
-          <h3 className="text-center text-sm font-semibold my-2 lg:my-4 text-secondary-green">
+          <h3 className="text-center text-sm font-semibold mb-2 text-secondary-green">
             Filter by Assign
           </h3>
           {user?.role === "manager" && (
@@ -173,9 +173,9 @@ const FiltersMenu = ({ onApplyFilters }) => {
             </div>
           )}
 
-          <hr className="md:my-2 lg:my-5" />
+          <hr className="my-2 border-white/10" />
 
-          <h3 className="text-center text-sm font-semibold my-1 md:my-2 lg:my-4 text-secondary-green">
+          <h3 className="text-center text-sm font-semibold mb-2 text-secondary-green">
             Filter by Date Range
           </h3>
           <select
@@ -215,9 +215,9 @@ const FiltersMenu = ({ onApplyFilters }) => {
             </option>
           </select>
 
-          <hr className="my-1 md:3 lg:my-5" />
+          <div className="h-px bg-white/10 my-2" />
 
-          <h3 className="text-center text-sm font-semibold my-1 lg:my-4 text-secondary-green">
+          <h3 className="text-center text-sm font-semibold mb-2 text-secondary-green">
             Sort by
           </h3>
           <div>
@@ -232,7 +232,7 @@ const FiltersMenu = ({ onApplyFilters }) => {
               <option value="title">Title</option>
             </select>
 
-            <hr className="my-2 md:my-3 lg:my-5" />
+            <hr className="my-2 border-white/10" />
 
             <div className="flex gap-1 lg:gap-10">
               <div className="inline-flex items-center">
@@ -271,16 +271,16 @@ const FiltersMenu = ({ onApplyFilters }) => {
             </div>
           </div>
 
-          <div className="flex justify-between mt-4">
+          <div className="flex gap-3 mt-4">
             <button
               onClick={applyFilters}
-              className="py-1 px-2 text-[13px] md:text-sm font-semibold mr-2 text-white bg-secondary-green rounded-[4px] hover:bg-secondary-green/80"
+              className="flex-1 py-2.5 px-4 text-sm font-bold text-white bg-white/20 hover:bg-white/30 rounded-xl transition-all active:scale-95 border border-white/20"
             >
-              Apply Filter
+              Apply
             </button>
             <button
               onClick={resetFilters}
-              className="bg-red-500 px-2 text-white py-1 rounded-[4px] text-[13px] md:text-sm font-semibold hover:bg-red-500/80"
+              className="py-2.5 px-4 text-sm font-bold text-white bg-red-500/20 hover:bg-red-500/40 rounded-xl transition-all active:scale-95 border border-red-500/30"
             >
               Reset
             </button>

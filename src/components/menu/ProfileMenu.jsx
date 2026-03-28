@@ -104,39 +104,48 @@ export function ProfileMenu() {
           />
         </MenuHandler>
 
-        <MenuList className="border-none rounded-[4px] shadow-xl px-5 md:px-8 my-2 overflow-hidden">
-          <div className="mb-4 md:flex md:justify-center mx-5 text-nowrap">
-            <Typography variant="small" className="font-medium">
+        <MenuList className="border border-white/20 rounded-2xl shadow-2xl bg-slate-900/95 backdrop-blur-2xl p-2 min-w-[220px] text-white ring-1 ring-white/10 z-[9999]">
+          <div className="px-4 py-3 border-b border-white/10 mb-2">
+            <Typography variant="small" className="font-bold text-white tracking-wide">
               {userData?.name || "Guest"}
+            </Typography>
+            <Typography variant="small" className="text-white/60 text-[10px] uppercase font-bold mt-0.5">
+              Personal Account
             </Typography>
           </div>
 
           <MenuItem
             aria-label="My Profile"
-            className="flex items-center gap-x-2 "
+            className="flex items-center gap-x-3 px-4 py-3 hover:bg-white/10 transition-colors rounded-xl"
             onClick={() => setOpenModal(true)}
           >
-            <img
-              className="w-7 h-7 rounded-full border border-primary-green"
-              src={userData?.avatar}
-              alt=""
-            />
-            <Typography variant="small" className="font-medium">
+            <div className="p-1 bg-white/10 rounded-full border border-white/20 shadow-inner">
+              <Avatar
+                size="sm"
+                variant="circular"
+                src={userData?.avatar}
+                alt=""
+                className="w-6 h-6"
+              />
+            </div>
+            <Typography variant="small" className="font-semibold text-white">
               My Profile
             </Typography>
           </MenuItem>
           <MenuItem
             aria-label="Logout"
-            className="flex items-center gap-x-2 mt-1 ml-1"
+            className="flex items-center gap-x-3 px-4 py-3 mt-1 hover:bg-red-500/20 text-red-200 transition-colors rounded-xl"
             onClick={handleClick}
             disabled={loading}
           >
-            {loading ? (
-              <Spinner size="sm" className="mr-2" />
-            ) : (
-              <LogoutIcon className="mr-1" />
-            )}
-            <Typography variant="small" className="font-medium">
+            <div className={`p-1 rounded-full ${loading ? '' : 'bg-red-500/10 border border-red-500/20'}`}>
+              {loading ? (
+                <Spinner size="sm" className="h-5 w-5" />
+              ) : (
+                <LogoutIcon className="text-red-300 !text-xl" />
+              )}
+            </div>
+            <Typography variant="small" className="font-semibold">
               {loading ? "Logging out..." : "Log Out"}
             </Typography>
           </MenuItem>

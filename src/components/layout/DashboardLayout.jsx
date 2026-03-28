@@ -105,9 +105,9 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="!bg-background-green h-full">
-      <nav className="bg-gradient-to-l from-[#5dd6de]  to-primary-green border-none">
-        <div className="max-w-screen-xl flex flex-nowrap items-center justify-between mx-auto lg:pl-6 px-2">
+    <div className="bg-[#000F18] min-h-screen text-slate-100 font-sans">
+      <nav className="sticky top-0 z-40 bg-[#0899A3]/80 backdrop-blur-lg border-b border-white/10 shadow-xl">
+        <div className="max-w-screen-2xl flex flex-nowrap items-center justify-between mx-auto px-4 lg:px-8 h-16">
           <div className="flex items-center mr-4 md:mr-10 lg:-ms-5">
             <div
               className="bg-[#024356] hover:bg-white p-1 rounded-[2px]"
@@ -135,12 +135,12 @@ const DashboardLayout = () => {
                   />
                 </li>
                 {!isProjectsNull ? (
-                  <li className="hidden md:block mt-4">
+                  <li className="hidden md:block">
                     <button
-                      className="py-1 px-2 text-white bg-secondary-green rounded-[4px] hover:bg-white hover:text-secondary-green"
+                      className="py-2 px-4 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-lg transition-all duration-300 font-medium text-sm shadow-sm active:scale-95"
                       onClick={() => setIsProjectModalOpen(true)}
                     >
-                      Create
+                      + Create
                     </button>
                   </li>
                 ) : null}
@@ -177,19 +177,19 @@ const DashboardLayout = () => {
         </div>
       </nav>
 
-      <nav className="bg-[#cbcdd1] border-none">
-        <div className="max-w-screen-xl flex flex-wrap items-start justify-between mx-auto py-3 px-2">
+      <nav className="sticky top-16 z-30 bg-white/5 backdrop-blur-md border-b border-white/10 shadow-lg">
+        <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto py-3 px-4 lg:px-8">
           {/* First Row: Left Section */}
           <div className="flex flex-wrap items-center space-x-3">
             <a
               href="#"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
-              <span className="font-normal text-[10px] text-secondary-green md:font-semibold md:text-[15px]">
+              <span className="text-sm md:text-lg font-bold tracking-tight text-white drop-shadow-sm">
                 {loading ? (
-                  <Skeleton variant="text" width={150} height={25} />
+                  <Skeleton variant="text" width={150} height={25} style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
                 ) : (
-                  <h1>{projectName}</h1>
+                  <h1>{projectName || "Dashboard"}</h1>
                 )}
               </span>
             </a>
@@ -228,20 +228,24 @@ const DashboardLayout = () => {
           )}
         </div>
       </nav>
-      <div>
+      <main className="relative p-4 lg:p-8">
         <Outlet />
         {isProjectsNull && (
-          <GuestProject
-            onCreateProject={() => {
-              setIsProjectModalOpen(true);
-            }}
-          />
+          <div className="flex justify-center items-center h-[60vh]">
+            <GuestProject
+              onCreateProject={() => {
+                setIsProjectModalOpen(true);
+              }}
+            />
+          </div>
         )}
         {!isProjectsNull && selectedProjectID && (
-          <Board
-            selectedProjectID={selectedProjectID}
-            selectedFilters={selectedFilters}
-          />
+          <div className="mt-4 transition-all duration-500 ease-in-out">
+            <Board
+              selectedProjectID={selectedProjectID}
+              selectedFilters={selectedFilters}
+            />
+          </div>
         )}
         {/* Modal Component */}
         <Modal isOpen={isModalOpen} toggleModal={toggleModal} />
@@ -254,7 +258,7 @@ const DashboardLayout = () => {
         />
         {/* <drawer /> */}
         <MainDrawer open={openDrawer} onClose={toggleDrawer(false)} />
-      </div>
+      </main>
     </div>
   );
 };

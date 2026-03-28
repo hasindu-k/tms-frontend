@@ -17,15 +17,23 @@ import Skeleton from "@mui/material/Skeleton";
 export function MenuCustomList({
   buttonText = "Dropdown",
   menuItems = [],
-  cardIcon = <CursorArrowRaysIcon strokeWidth={1} className="h-10 w-10" />,
+  cardIcon = <CursorArrowRaysIcon strokeWidth={1} className="h-10 w-10 text-white" />,
   onTitleChange,
   loading = false,
 }) {
-  const [openMenu, setOpenMenu] = React.useState(false);
-  const [cardTitle, setCardTitle] = useState("Default project title");
+  const [openMenu, setOpenMenu] = useState(false);
+  const [cardTitle, setCardTitle] = useState(menuItems[0]?.title || "Select a project");
   const [cardDescription, setCardDescription] = useState(
-    "Default project description"
+    menuItems[0]?.description || "Choose from your workspace projects"
   );
+
+  // Sync card content with menuItems when they load
+  React.useEffect(() => {
+    if (menuItems.length > 0 && cardTitle === "Select a project") {
+      setCardTitle(menuItems[0].title);
+      setCardDescription(menuItems[0].description);
+    }
+  }, [menuItems]);
 
   const handleMenuItemClick = (id, title, description) => {
     setCardTitle(title);
@@ -38,7 +46,7 @@ export function MenuCustomList({
       <MenuHandler>
         <Button
           variant="text"
-          className="flex items-center gap-3 text-base capitalize tracking-normal font-medium mt-0.5 text-gray-200 hover:text-secondary-green"
+          className="flex items-center gap-3 text-base capitalize tracking-normal font-medium text-white/90 hover:text-white hover:bg-white/10 transition-all rounded-lg px-3 py-2"
         >
           <span className="hidden md:block">{buttonText}</span>
           <ChevronDownIcon
@@ -49,54 +57,52 @@ export function MenuCustomList({
           />
         </Button>
       </MenuHandler>
-      <MenuList className="w-[15rem] md:w-[36rem] grid-cols-7 gap-3 bg-gray-300/95 rounded-[4px] md:grid text-secondary-green">
+      <MenuList className="w-[15rem] md:w-[36rem] grid-cols-7 gap-3 bg-slate-900/95 backdrop-blur-2xl border border-white/20 rounded-2xl md:grid text-white p-2 shadow-2xl ring-1 ring-white/10 z-[9999]">
         <Card
-          color="gray"
+          color="transparent"
           shadow={false}
-          className="col-span-3 flex h-full w-full items-center justify-center rounded-2xl p-4"
+          className="col-span-3 flex h-full w-full items-center justify-center rounded-xl p-4 bg-white/5 border border-white/10 text-white"
         >
           {cardIcon}
-          <Typography className="mt-5 text-center" variant="h5">
+          <Typography className="mt-5 text-center text-white" variant="h5">
             {cardTitle}
           </Typography>
-          <Typography className="mt-2 text-center" variant="small">
+          <Typography className="mt-2 text-center text-white/70" variant="small">
             {cardDescription}
           </Typography>
         </Card>
         <ul className="col-span-4 flex w-full flex-col gap-1">
           {menuItems.map(({ id, title, description }, index) => (
-            <div
-              key={index}
+            <MenuItem
+              key={id || index}
               onClick={() => handleMenuItemClick(id, title, description)}
-              className="cursor-pointer"
+              className="hover:bg-white/10 active:bg-white/20 transition-all rounded-lg p-3 group focus:bg-white/10 outline-none"
             >
-              <MenuItem>
-                {loading ? (
-                  <>
-                    <Skeleton variant="text" width={150} height={25} />
-                    <Skeleton
-                      variant="text"
-                      width={250}
-                      height={15}
-                      className="mt-1"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="h6" color="blue-gray" className="mb-1">
-                      {title}
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      color="gray"
-                      className="font-normal"
-                    >
-                      {description}
-                    </Typography>
-                  </>
-                )}
-              </MenuItem>
-            </div>
+              {loading ? (
+                <>
+                  <Skeleton variant="text" width={150} height={25} style={{ backgroundColor: 'rgba(255,255,255,0.1)' }} />
+                  <Skeleton
+                    variant="text"
+                    width={250}
+                    height={15}
+                    className="mt-1"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
+                  />
+                </>
+              ) : (
+                <div className="w-full">
+                  <Typography variant="h6" className="mb-0.5 text-white font-bold group-hover:text-white transition-colors">
+                    {title}
+                  </Typography>
+                  <Typography
+                    variant="small"
+                    className="font-normal text-white/60 group-hover:text-white/80 transition-colors line-clamp-1"
+                  >
+                    {description}
+                  </Typography>
+                </div>
+              )}
+            </MenuItem>
           ))}
         </ul>
       </MenuList>
@@ -109,11 +115,12 @@ MenuCustomList.propTypes = {
   buttonText: PropTypes.string,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
     })
   ),
   cardIcon: PropTypes.element,
-  cardTitle: PropTypes.string,
-  cardDescription: PropTypes.string,
+  onTitleChange: PropTypes.func,
+  loading: PropTypes.bool,
 };
